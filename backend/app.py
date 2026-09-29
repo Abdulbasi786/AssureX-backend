@@ -34,15 +34,17 @@ REQUIRED_TM = ["model.json", "metadata.json", "weights.bin"]
 app = FastAPI(title="AssureX Claim Engine", version="1.0.0")
 
 allowed_origins = [
+    "*",
     "https://assurex-48r6tpr7o-ab2340761-4608.vercel.app",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
+    
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
