@@ -32,9 +32,20 @@ REQUIRED_PY = ["best_model.pkl", "scaler.pkl", "label_encoders.pkl", "feature_co
 REQUIRED_TM = ["model.json", "metadata.json", "weights.bin"]
 
 app = FastAPI(title="AssureX Claim Engine", version="1.0.0")
-allowed_origins = [x.strip() for x in os.getenv("ASSUREX_ALLOWED_ORIGINS", "http://localhost:5500,http://127.0.0.1:5500").split(",") if x.strip()]
-app.add_middleware(CORSMiddleware, allow_origins=allowed_origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Authorization", "Content-Type"])
 
+allowed_origins = [
+    "https://assurex-48r6tpr7o-ab2340761-4608.vercel.app",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class ClaimAnalyzeRequest(BaseModel):
     claim: dict[str, Any]
     existing_claims: list[dict[str, Any]] = Field(default_factory=list)
